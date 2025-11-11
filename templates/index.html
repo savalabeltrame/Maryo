@@ -6,27 +6,17 @@
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <link href="https://fonts.googleapis.com/css?family=Open+Sans:600,700&display=swap" rel="stylesheet">
 <style>
-  <style>
-body {
-    background: #e6e7ee url('/static/taxi1.jpg') no-repeat center center fixed;
-    background-size: cover;
-    font-family: 'Open Sans', Arial, sans-serif;
-    color: #232d3b;
-    margin: 0;
-}
-</style>
-
 :root{
   --color-logo: #FFD600;
   --color-texto: #232d3b;
 }
 body {
-      background: #e6e7ee url('/static/images/taxi1.jpg') no-repeat center center fixed;
-      background-size: cover;
-      font-family: 'Open Sans', Arial, sans-serif;
-      color: #232d3b;
-      margin: 0;
-    }
+  background: #e6e7ee url('/static/images/taxi1.jpg') no-repeat center center fixed;
+  background-size: cover;
+  font-family: 'Open Sans', Arial, sans-serif;
+  color: #232d3b;
+  margin: 0;
+}
 .header {height:56px;background:var(--color-logo);display:flex;align-items:center;justify-content:space-between;padding:0 18px;position:relative;z-index:120;box-shadow:0 2px 12px #2227;}
 .logo {color:var(--color-texto);font-size:1.25rem;font-weight:700;}
 .menu-btn {background:none;border:none;cursor:pointer;z-index:130;}
@@ -46,7 +36,8 @@ body {
   max-width:445px;margin:50px auto 16px auto;
   border-radius:26px;box-shadow:0 4px 32px #bbb;
 }
-.titulo {font-size:1.55rem;font-weight:700;color:var(--color-texto);margin-bottom:30px;margin-top:6px;letter-spacing:0;}
+.titulo {font-size:1.55rem;font-weight:700;color:var(--color-texto);margin-bottom:10px;margin-top:6px;letter-spacing:0;}
+.subanuncio {font-size:1.09rem;color:#346;margin-bottom:30px;}
 .boton-link {
   display:inline-block;margin:22px auto 10px auto;padding:13px 44px;background:var(--color-logo);font-size:1.09rem;color:var(--color-texto);font-weight:700;border-radius:16px;text-decoration:none;box-shadow:0 2px 12px #ccc;border:none;transition:.2s;cursor:pointer;
 }
@@ -81,10 +72,10 @@ body {
     <li><a href="/salir">Salir</a></li>
   </ul>
 </div>
-
 <div class="overlay" id="fondo" onclick="cerrarMenu()"></div>
 <div class="main">
   <div class="titulo">Bienvenido a Taxi MarYo</div>
+  <div class="subanuncio">Tu plataforma para moverte y pedir, en moto y autos</div>
   <img src="/static/images/logo1.avif" alt="Logo MarYo" style="width:120px;display:block;margin:14px auto 18px auto;"/>
   <a class="boton-link" href="/pedir">Pedir viaje</a>
   <a class="boton-link" href="/seguimiento">Ver seguimiento</a>
