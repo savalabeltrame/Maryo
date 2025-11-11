@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Mapa - Taxi MarYo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:600,700&display=swap" rel="stylesheet">
+  <style>
+    body {background: #e6e7ee; font-family:'Open Sans',Arial,sans-serif; color:#232d3b; margin:0;}
+    .header {height:56px; background:#FFD600; display:flex; align-items:center; justify-content:space-between; padding:0 18px;}
+    .logo {font-size:1.25rem;font-weight:700;}
+    .main {padding:38px 12px;margin:54px auto 18px auto;background:#fff;border-radius:26px;box-shadow:0 4px 32px #bbb;max-width:520px;text-align:center;}
+    #map {width:99%;height:410px;border-radius:16px;border:1.4px solid #FFD600;margin:10px auto 22px auto;}
+    @media(max-width:600px){ .main{padding:12px 2vw;} #map{height:290px;} .logo{font-size:1.09rem;} }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <span class="logo">Taxi MarYo</span>
+  </div>
+  <div class="main">
+    <h2>Mapa</h2>
+    <div id="map"></div>
+    <a href="/" style="display:inline-block;margin-top:22px;background:#FFD600;color:#232d3b;padding:13px 34px;border-radius:14px;text-decoration:none;font-weight:700;">Volver al inicio</a>
+  </div>
+  <script>
+    function initMap() {
+      var centro = {lat: -34.6037, lng: -58.3816}; // Cambia por la ubicación central deseada
+      var mapa = new google.maps.Map(document.getElementById('map'), {
+        zoom: 13,
+        center: centro
+      });
+    }
+  </script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBD_WKo9E55STztZwgDP5wJwp0vzBoVaLY&callback=initMap" async defer></script>
+</body>
+</html>

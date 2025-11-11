@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Login Admin - Taxi MarYo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:600,700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background: #e6e7ee url('/static/taxi1.jpg') no-repeat center center fixed;
+      background-size: cover;
+      font-family: 'Open Sans', Arial, sans-serif;
+      margin: 0; color: #232d3b;
+    }
+    .header {height:56px; background:rgba(255,214,0,.93); display:flex; align-items:center; justify-content:space-between; padding:0 18px; box-shadow:0 2px 12px #2227;}
+    .logo-img {width:48px; max-width:15vw; margin:4px 8px 4px 0; filter:drop-shadow(0 1px 6px #8884);}
+    .menu-btn{background:none; border:none; cursor:pointer; z-index:130;}
+    .menu-ham{width:34px;height:34px;} .menu-ham rect{fill:#FFD600;stroke:#232d3b;stroke-width:2;}
+    .menu {position:fixed;top:0;left:-94vw;width:90vw;min-width:140px;max-width:420px;height:100vh;background:#fff;box-shadow:2px 0 22px #2224;transition:left .3s;z-index:150;overflow-y:auto;}
+    .menu.open{left:0;} .menu ul{list-style:none;padding:0;margin:0;} .menu li{width:100%;}
+    .menu a,.menu .active,.menu a:hover{display:block;color:#232d3b;font-size:1.15rem;font-weight:700;padding:16px 22px;background:#FFD600;border:none;box-shadow:none;text-align:left;width:100%;text-decoration:none;}
+    .menu .active,.menu a:hover{background:#232d3b;color:#FFD600;}
+    .overlay{display:none;position:fixed;z-index:100;top:0;left:0;width:100vw;height:100vh;background:rgba(40,48,60,0.08);}
+    .overlay.show{display:block;}
+    .main{padding:38px 14px;margin:60px auto 26px auto;background:rgba(255,255,255,0.94);border-radius:26px;box-shadow:0 4px 32px #bbb;max-width:380px;text-align:center;}
+    label{font-weight:700;margin:8px 0 3px 0;}
+    input{width:94%;margin:6px auto 14px auto;padding:10px;border-radius:10px;border:1.4px solid #dde;font-size:1rem;background:#e6f7ea;display:block;}
+    .boton-link{display:inline-block;margin:18px 2px 6px 2px;padding:13px 40px;background:#FFD600;color:#232d3b;font-size:1.07rem;font-weight:700;border-radius:14px;text-decoration:none;border:none;box-shadow:0 2px 8px #bbb;transition:.23s;cursor:pointer;}
+    .boton-link:hover{background:#232d3b;color:#FFD600;}
+    .error{color:#b00020;font-weight:600;margin-top:8px;}
+    @media(max-width:650px){ .main{padding:10px 2vw;} .logo-img{width:36px;max-width:12vw;} }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <button class="menu-btn" onclick="abrirMenu()" aria-label="Menú">
+      <svg width="34" height="34" viewBox="0 0 48 48" class="menu-ham"><rect y="7" width="34" height="6" rx="3"/><rect y="21" width="34" height="6" rx="3"/><rect y="35" width="34" height="6" rx="3"/></svg>
+    </button>
+    <img src="/static/logo1.avif" alt="Taxi MarYo" class="logo-img">
+  </div>
+<div class="menu" id="menulat">
+  <ul>
+    <li><a href="/">Inicio</a></li>
+    <li><a href="/solicitar_viaje">Solicitar viaje</a></li>
+    <li><a href="/seguimiento">Ver seguimiento</a></li>
+    <li><a href="/viajes">Mis viajes</a></li>
+    <li><a href="/login">Login</a></li>
+    <li><a href="/register">Registrar</a></li>
+    <li><a href="/admin_login">Login Admin</a></li>
+    <li><a href="/salir">Salir</a></li>
+  </ul>
+</div>
+
+  <div class="overlay" id="fondo" onclick="cerrarMenu()"></div>
+  <div class="main">
+    <h2>Login Administrador</h2>
+    <form method="post" action="/admin_login">
+      <label for="usuario">Usuario Administrador</label>
+      <input type="text" id="usuario" name="usuario" required>
+      <label for="clave">Clave Administrador</label>
+      <input type="password" id="clave" name="clave" required>
+      <button class="boton-link" type="submit">Entrar como Admin</button>
+    </form>
+    {% if error %}
+      <div class="error">{{ error }}</div>
+    {% endif %}
+  </div>
+  <script>
+    function abrirMenu(){document.getElementById('menulat').classList.add('open');document.getElementById('fondo').classList.add('show');}
+    function cerrarMenu(){document.getElementById('menulat').classList.remove('open');document.getElementById('fondo').classList.remove('show');}
+  </script>
+</body>
+</html>

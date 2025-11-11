@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Mapa de Seguimiento - Taxi MarYo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:600,700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background: #e6e7ee url('/static/images/taxi1.jpg') no-repeat center center fixed;
+      background-size: cover;
+      font-family: 'Open Sans', Arial, sans-serif;
+      color: #232d3b;
+      margin: 0;
+    }
+    .header {height:56px; background:#FFD600; display:flex; align-items:center; justify-content:space-between; padding:0 18px;}
+    .logo {font-size:1.25rem;font-weight:700;}
+    .menu-btn {background:none;border:none;cursor:pointer;z-index:130;}
+    .menu-ham {width:34px;height:34px;display:block;}
+    .menu-ham rect{fill:#FFD600;stroke:#232d3b;stroke-width:2;}
+    .menu {position:fixed;top:0;left:-90vw;width:85vw;min-width:140px;max-width:280px;height:100vh;background:#fff;box-shadow:2px 0 22px #2224;transition:left .3s;z-index:150;overflow-y:auto;display:block;}
+    .menu.open {left:0;}
+    .menu ul {list-style:none;padding:0;margin:0;width:100%;}
+    .menu li {width:100%;padding:0;margin:0;}
+    .menu a,.menu .active,.menu a:hover {display:block;color:#232d3b !important;font-size:1rem !important;font-weight:700 !important;padding:14px 18px !important;background:#FFD600 !important;border:none !important;box-shadow:none !important;text-align:left;width:100%!important;text-decoration:none;}
+    .menu .active,.menu a:hover {background:#232d3b !important;color:#FFD600 !important;}
+    .overlay {display:none;position:fixed;z-index:100;top:0;left:0;width:100vw;height:100vh;background:rgba(40,48,60,0.08);transition:.2s;}
+    .overlay.show {display:block;}
+    .main {padding:38px 12px;margin:54px auto 18px auto;background:#fff;border-radius:26px;box-shadow:0 4px 32px #bbb;max-width:520px;text-align:center;}
+    #map {width:99%;height:410px;border-radius:16px;border:1.4px solid #FFD600;margin:10px auto 22px auto;}
+    .info {background:#f0f0f0;padding:14px;border-radius:12px;margin:14px 0;text-align:left;font-size:0.95rem;}
+    .info p {margin:6px 0;}
+    @media(max-width:600px){ .main{padding:12px 2vw;} #map{height:290px;} .logo{font-size:1.09rem;} }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <button class="menu-btn" onclick="abrirMenu()" aria-label="Menú">
+      <svg width="34" height="34" viewBox="0 0 48 48" class="menu-ham">
+        <rect y="7" width="34" height="6" rx="3"/>
+        <rect y="21" width="34" height="6" rx="3"/>
+        <rect y="35" width="34" height="6" rx="3"/>
+      </svg>
+    </button>
+    <span class="logo">Taxi MarYo</span>
+  </div>
+  <div class="menu" id="menulat">
+    <ul>
+      <li><a href="/">Inicio</a></li>
+      <li><a href="/solicitar_viaje">Solicitar viaje</a></li>
+      <li><a href="/seguimiento" class="active">Ver seguimiento</a></li>
+      <li><a href="/viajes">Mis viajes</a></li>
+      <li><a href="/login">Login</a></li>
+      <li><a href="/register">Registrar</a></li>
+      <li><a href="/admin_login">Login Admin</a></li>
+      <li><a href="/salir">Salir</a></li>
+    </ul>
+  </div>
+  <div class="overlay" id="fondo" onclick="cerrarMenu()"></div>
+  <div class="main">
+    <h2>Mapa de Seguimiento</h2>
+    <div class="info">
+      <p><strong>📍 Ubicación:</strong></p>
+      <p>Rua Devaldino Josoel Binelli # 140</p>
+      <p>Concórdia, Santa Catarina, Brasil</p>
+    </div>
+    <div id="map"></div>
+    <a href="/" style="display:inline-block;margin-top:22px;background:#FFD600;color:#232d3b;padding:13px 34px;border-radius:14px;text-decoration:none;font-weight:700;">Volver al inicio</a>
+  </div>
+  <script>
+    function initMap() {
+      // Coordenadas exactas para Rua Devaldino Josoel Binelli #140, Concórdia, SC, Brasil
+      var concordia = {lat: -27.2373527, lng: -52.0263547};
+      
+      var mapa = new google.maps.Map(document.getElementById('map'), {
+        zoom: 17,
+        center: concordia
+      });
+      
+      var marcador = new google.maps.Marker({
+        position: concordia,
+        map: mapa,
+        title: 'Taxi MarYo - Concórdia, SC',
+        icon: 'http://maps.google.com/mapfiles/ms/icons/yellow-dot.png'
+      });
+      
+      var infoWindow = new google.maps.InfoWindow({
+        content: '<div style="color:#000;"><strong>Taxi MarYo</strong><br/>Rua Devaldino Josoel Binelli # 140<br/>Concórdia, SC, Brasil</div>'
+      });
+      
+      marcador.addListener('click', function() {
+        infoWindow.open(mapa, marcador);
+      });
+    }
+  </script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBD_WKo9E55STztZwgDP5wJwp0vzBoVaLY&callback=initMap" async defer></script>
+  
+  <script>
+    function abrirMenu() {
+      document.getElementById('menulat').classList.add('open');
+      document.getElementById('fondo').classList.add('show');
+    }
+    function cerrarMenu() {
+      document.getElementById('menulat').classList.remove('open');
+      document.getElementById('fondo').classList.remove('show');
+    }
+  </script>
+</body>
+</html>

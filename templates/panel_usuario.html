@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Panel de Usuario - Taxi MarYo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:600,700&display=swap" rel="stylesheet">
+  <style>
+    :root{--color-logo: #FFD600;--color-texto: #232d3b;}
+   body {
+      background: #e6e7ee url('/static/images/taxi1.jpg') no-repeat center center fixed;
+      background-size: cover;
+      font-family: 'Open Sans', Arial, sans-serif;
+      color: #232d3b;
+      margin: 0;
+    }
+    .header {height:56px;background:var(--color-logo);display:flex;align-items:center;justify-content:space-between;padding:0 18px;position:relative;z-index:120;box-shadow:0 2px 12px #2227;}
+    .logo {color:var(--color-texto);font-size:1.25rem;font-weight:700;}
+    .menu-btn {background:none;border:none;cursor:pointer;z-index:130;}
+    .menu-ham {width:34px;height:34px;display:block;}
+    .menu-ham rect{fill:var(--color-logo);stroke:var(--color-texto);stroke-width:2;}
+    .menu {position:fixed;top:0;left:-90vw;width:85vw;min-width:140px;max-width:280px;height:100vh;background:#fff;box-shadow:2px 0 22px #2224;transition:left .3s;z-index:150;overflow-y:auto;display:block;}
+    .menu.open {left:0;}
+    .menu ul {list-style:none;padding:0;margin:0;width:100%;}
+    .menu li {width:100%;padding:0;margin:0;}
+    .menu a,.menu .active,.menu a:hover {display:block;color:var(--color-texto) !important;font-size:1rem !important;font-weight:700 !important;padding:14px 18px !important;background:var(--color-logo) !important;border:none !important;box-shadow:none !important;text-align:left;width:100%!important;text-decoration:none;}
+    .menu .active,.menu a:hover {background:var(--color-texto) !important;color:var(--color-logo) !important;}
+    .overlay {display:none;position:fixed;z-index:100;top:0;left:0;width:100vw;height:100vh;background:rgba(40,48,60,0.08);transition:.2s;}
+    .overlay.show {display:block;}
+    .main {padding:30px 12px;margin:50px auto 16px auto;background:#fff;border-radius:28px;box-shadow:0 4px 32px #bbb;max-width:520px;}
+    .titulo {font-size:1.45rem;font-weight:700;margin-bottom:14px;text-align:center;}
+    .bienvenida {background:#e8f5e9;padding:16px;border-radius:12px;margin-bottom:22px;text-align:center;border-left:4px solid #4caf50;}
+    .bienvenida p {margin:6px 0;font-weight:600;}
+    .opciones {display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:22px 0;}
+    .opcion-btn {display:flex;flex-direction:column;align-items:center;justify-content:center;padding:18px;background:#FFD600;border-radius:12px;text-decoration:none;color:var(--color-texto);font-weight:700;transition:.2s;box-shadow:0 2px 12px #ccc;min-height:100px;}
+    .opcion-btn:hover {background:var(--color-texto);color:var(--color-logo);transform:translateY(-3px);}
+    .icono {font-size:2rem;margin-bottom:8px;}
+    .perfil-info {background:#f5f5f5;padding:16px;border-radius:12px;margin:22px 0;}
+    .perfil-info p {margin:8px 0;}
+    .perfil-info span {font-weight:600;color:var(--color-logo);}
+    .boton-link {display:inline-block;margin:14px auto;padding:13px 34px;background:var(--color-logo);font-size:1.09rem;color:var(--color-texto);font-weight:700;border-radius:16px;text-decoration:none;box-shadow:0 2px 12px #ccc;border:none;transition:.2s;cursor:pointer;width:100%;box-sizing:border-box;text-align:center;}
+    .boton-link:hover {background:var(--color-texto);color:var(--color-logo);}
+    .boton-logout {background:#e74c3c;}
+    .boton-logout:hover {background:#c0392b;color:#fff;}
+    @media (max-width:650px){
+      .main{padding:20px 2vw;}
+      .titulo{font-size:1.13rem;}
+      .logo {font-size:1.03rem;}
+      .opciones {grid-template-columns:1fr;}
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <button class="menu-btn" onclick="abrirMenu()" aria-label="Menu">
+      <svg width="34" height="34" viewBox="0 0 48 48" class="menu-ham">
+        <rect y="7" width="34" height="6" rx="3"/>
+        <rect y="21" width="34" height="6" rx="3"/>
+        <rect y="35" width="34" height="6" rx="3"/>
+      </svg>
+    </button>
+    <span class="logo">Taxi MarYo</span>
+  </div>
+  <div class="menu" id="menulat">
+    <ul>
+      <li><a href="/">Inicio</a></li>
+      <li><a href="/solicitar_viaje">Solicitar viaje</a></li>
+      <li><a href="/seguimiento">Ver seguimiento</a></li>
+      <li><a href="/viajes">Mis viajes</a></li>
+      <li><a href="/panel_usuario" class="active">Mi Panel</a></li>
+      <li><a href="/logout">Cerrar Sesión</a></li>
+      <li><a href="/admin_login">Login Admin</a></li>
+    </ul>
+  </div>
+  <div class="overlay" id="fondo" onclick="cerrarMenu()"></div>
+
+  <div class="main">
+    <div class="titulo">Mi Panel</div>
+    
+    <div class="bienvenida">
+      <p>¡Bienvenido!</p>
+      <p>{{ usuario['nombre'] }}</p>
+    </div>
+    
+    <div class="opciones">
+      <a href="/solicitar_viaje" class="opcion-btn">
+        <span class="icono">🚗</span>
+        <span>Solicitar Viaje</span>
+      </a>
+      <a href="/viajes" class="opcion-btn">
+        <span class="icono">📋</span>
+        <span>Mis Viajes</span>
+      </a>
+      <a href="/seguimiento" class="opcion-btn">
+        <span class="icono">📍</span>
+        <span>Seguimiento</span>
+      </a>
+      <a href="#perfil" class="opcion-btn">
+        <span class="icono">👤</span>
+        <span>Mi Perfil</span>
+      </a>
+    </div>
+    
+    <div class="perfil-info" id="perfil">
+      <h3 style="margin-top:0;">Información de Cuenta</h3>
+      <p><span>Nombre:</span> {{ usuario['nombre'] }}</p>
+      <p><span>Email:</span> {{ usuario['email'] }}</p>
+      <p><span>Teléfono:</span> {{ usuario['telefono'] if usuario['telefono'] else 'No registrado' }}</p>
+      <p><span>Tipo de Usuario:</span> {{ usuario['tipo'] }}</p>
+      <p><span>Miembro desde:</span> {{ usuario['fecha_registro'] }}</p>
+    </div>
+    
+    <a href="/logout" class="boton-link boton-logout">Cerrar Sesión</a>
+    <a href="/" class="boton-link" style="background:#999;margin-top:8px;">Volver al inicio</a>
+  </div>
+
+  <script>
+    function abrirMenu() {
+      document.getElementById('menulat').classList.add('open');
+      document.getElementById('fondo').classList.add('show');
+    }
+    function cerrarMenu() {
+      document.getElementById('menulat').classList.remove('open');
+      document.getElementById('fondo').classList.remove('show');
+    }
+  </script>
+</body>
+</html>

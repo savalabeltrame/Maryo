@@ -1,0 +1,180 @@
+body {
+    background: url("/static/images/taxi1.jpg") center center fixed;
+    background-size: cover;
+}
+
+.card {
+    background: rgba(255,255,255,0.94);
+    border-radius: 18px;
+    box-shadow: 0 2px 16px #FFD60044;
+    transition: box-shadow 0.2s, transform 0.16s;
+}
+
+.card:hover {
+    box-shadow: 0 4px 30px #1976D233;
+    transform: translateY(-3px) scale(1.01);
+}
+
+.btn, .btn-warning, .btn-light {
+    transition: background 0.2s, color 0.2s, transform 0.1s;
+}
+
+.btn-warning:hover, .btn-light:hover {
+    background: #ffec80 !important;
+    color: #111 !important;
+    transform: scale(1.04);
+    box-shadow: 0 4px 16px #FFD60055;
+}
+
+.navbar {
+    box-shadow: 0 4px 16px #FFD60033;
+    position: sticky;
+    top: 0;
+    z-index: 9;
+}
+
+/* Loader animado */
+.loader {
+    border: 4px solid #FFD600;
+    border-top: 4px solid #fff;
+    border-radius: 50%;
+    width: 38px;
+    height: 38px;
+    animation: spin 0.8s linear infinite;
+    display: inline-block;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Bounce animado para títulos */
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-7px); }
+}
+
+/* MENÚ HAMBURGUESA - ACHICADO */
+.menu {
+    position: fixed;
+    top: 0;
+    left: -90vw;
+    width: 85vw;
+    min-width: 140px;
+    max-width: 280px;
+    height: 100vh;
+    background: #fff;
+    box-shadow: 2px 0 22px #2224;
+    transition: left .3s;
+    z-index: 150;
+    overflow-y: auto;
+    display: block;
+}
+
+.menu.open {
+    left: 0;
+}
+
+.menu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+}
+
+.menu li {
+    width: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+.menu a, .menu .active, .menu a:hover {
+    display: block;
+    color: #232d3b !important;
+    font-size: 1rem !important;
+    font-weight: 700 !important;
+    padding: 14px 18px !important;
+    background: #FFD600 !important;
+    border: none !important;
+    box-shadow: none !important;
+    text-align: left;
+    width: 100% !important;
+    text-decoration: none;
+}
+
+.menu .active, .menu a:hover {
+    background: #232d3b !important;
+    color: #FFD600 !important;
+}
+
+/* OVERLAY */
+.overlay {
+    display: none;
+    position: fixed;
+    z-index: 100;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(40, 48, 60, 0.08);
+    transition: .2s;
+}
+
+.overlay.show {
+    display: block;
+}
+
+/* HEADER */
+.header {
+    height: 56px;
+    background: #FFD600;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 18px;
+    position: relative;
+    z-index: 120;
+    box-shadow: 0 2px 12px #2227;
+}
+
+.logo {
+    color: #232d3b;
+    font-size: 1.25rem;
+    font-weight: 700;
+}
+
+.menu-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    z-index: 130;
+}
+
+.menu-ham {
+    width: 34px;
+    height: 34px;
+    display: block;
+}
+
+.menu-ham rect {
+    fill: #FFD600;
+    stroke: #232d3b;
+    stroke-width: 2;
+}
+
+/* RESPONSIVE */
+@media (max-width: 650px) {
+    .menu {
+        max-width: 260px;
+    }
+    
+    .menu a, .menu .active, .menu a:hover {
+        font-size: 0.95rem !important;
+        padding: 12px 16px !important;
+    }
+    
+    .logo {
+        font-size: 1.03rem;
+    }
+}

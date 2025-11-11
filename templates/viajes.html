@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Mis Viajes - Taxi MarYo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:600,700&display=swap" rel="stylesheet">
+  <style>
+    :root{--color-logo: #FFD600;--color-texto: #232d3b;}
+    body {
+      background: #e6e7ee url('/static/images/taxi1.jpg') no-repeat center center fixed;
+      background-size: cover;
+      font-family: 'Open Sans', Arial, sans-serif;
+      color: #232d3b;
+      margin: 0;
+    }
+    .header {height:56px;background:var(--color-logo);display:flex;align-items:center;justify-content:space-between;padding:0 18px;position:relative;z-index:120;box-shadow:0 2px 12px #2227;}
+    .logo {color:var(--color-texto);font-size:1.25rem;font-weight:700;}
+    .menu-btn {background:none;border:none;cursor:pointer;z-index:130;}
+    .menu-ham {width:34px;height:34px;display:block;}
+    .menu-ham rect{fill:var(--color-logo);stroke:var(--color-texto);stroke-width:2;}
+    .menu {position:fixed;top:0;left:-90vw;width:85vw;min-width:140px;max-width:280px;height:100vh;background:#fff;box-shadow:2px 0 22px #2224;transition:left .3s;z-index:150;overflow-y:auto;display:block;}
+    .menu.open {left:0;}
+    .menu ul {list-style:none;padding:0;margin:0;width:100%;}
+    .menu li {width:100%;padding:0;margin:0;}
+    .menu a,.menu .active,.menu a:hover {display:block;color:var(--color-texto) !important;font-size:1rem !important;font-weight:700 !important;padding:14px 18px !important;background:var(--color-logo) !important;border:none !important;box-shadow:none !important;text-align:left;width:100%!important;text-decoration:none;}
+    .menu .active,.menu a:hover {background:var(--color-texto) !important;color:var(--color-logo) !important;}
+    .overlay {display:none;position:fixed;z-index:100;top:0;left:0;width:100vw;height:100vh;background:rgba(40,48,60,0.08);transition:.2s;}
+    .overlay.show {display:block;}
+    .main {padding:30px 12px;margin:50px auto 16px auto;background:#fff;border-radius:28px;box-shadow:0 4px 32px #bbb;max-width:600px;}
+    .titulo {font-size:1.45rem;font-weight:700;margin-bottom:22px;text-align:center;}
+    .viaje-card {background:#f9f9f9;padding:16px;border-radius:12px;margin-bottom:14px;border-left:4px solid var(--color-logo);box-shadow:0 2px 8px #ddd;}
+    .viaje-header {display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;}
+    .viaje-titulo {font-weight:700;font-size:1.1rem;}
+    .estado {display:inline-block;padding:4px 12px;border-radius:20px;font-weight:600;font-size:0.85rem;}
+    .estado-pendiente {background:#fff3cd;color:#856404;}
+    .estado-aceptado {background:#d1ecf1;color:#0c5460;}
+    .estado-completado {background:#d4edda;color:#155724;}
+    .estado-cancelado {background:#f8d7da;color:#721c24;}
+    .viaje-detalles {color:#666;font-size:0.95rem;}
+    .viaje-detalles p {margin:6px 0;}
+    .viaje-detalles strong {color:var(--color-texto);}
+    .sin-viajes {text-align:center;padding:40px 20px;color:#999;}
+    .sin-viajes-icono {font-size:3rem;margin-bottom:10px;}
+    .boton-link {display:inline-block;margin:14px auto;padding:13px 34px;background:var(--color-logo);font-size:1.09rem;color:var(--color-texto);font-weight:700;border-radius:16px;text-decoration:none;box-shadow:0 2px 12px #ccc;border:none;transition:.2s;cursor:pointer;width:100%;box-sizing:border-box;text-align:center;}
+    .boton-link:hover {background:var(--color-texto);color:var(--color-logo);}
+    .boton-pequeño {display:inline-block;padding:8px 18px;font-size:0.9rem;margin-top:8px;width:auto;margin-right:6px;}
+    .boton-cancelar {background:#e74c3c;color:#fff;}
+    .boton-cancelar:hover {background:#c0392b;}
+    @media (max-width:650px){
+      .main{padding:20px 2vw;}
+      .titulo{font-size:1.13rem;}
+      .logo {font-size:1.03rem;}
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <button class="menu-btn" onclick="abrirMenu()" aria-label="Menu">
+      <svg width="34" height="34" viewBox="0 0 48 48" class="menu-ham">
+        <rect y="7" width="34" height="6" rx="3"/>
+        <rect y="21" width="34" height="6" rx="3"/>
+        <rect y="35" width="34" height="6" rx="3"/>
+      </svg>
+    </button>
+    <span class="logo">Taxi MarYo</span>
+  </div>
+  <div class="menu" id="menulat">
+    <ul>
+      <li><a href="/">Inicio</a></li>
+      <li><a href="/solicitar_viaje">Solicitar viaje</a></li>
+      <li><a href="/seguimiento">Ver seguimiento</a></li>
+      <li><a href="/viajes" class="active">Mis viajes</a></li>
+      <li><a href="/panel_usuario">Mi Panel</a></li>
+      <li><a href="/logout">Cerrar Sesión</a></li>
+    </ul>
+  </div>
+  <div class="overlay" id="fondo" onclick="cerrarMenu()"></div>
+
+  <div class="main">
+    <div class="titulo">Mis Viajes</div>
+    
+    {% if viajes %}
+      {% for viaje in viajes %}
+        <div class="viaje-card">
+          <div class="viaje-header">
+            <div class="viaje-titulo">Viaje #{{ viaje['id'] }}</div>
+            <span class="estado estado-{{ viaje['estado'] }}">{{ viaje['estado']|upper }}</span>
+          </div>
+          <div class="viaje-detalles">
+            <p><strong>📍 Origen:</strong> {{ viaje['origen'] }}</p>
+            <p><strong>🎯 Destino:</strong> {{ viaje['destino'] }}</p>
+            <p><strong>🚗 Tipo:</strong> {{ viaje['tipo'] }}</p>
+            <p><strong>📅 Fecha:</strong> {{ viaje['fecha_solicitud'] }}</p>
+          </div>
+          {% if viaje['estado'] == 'pendiente' %}
+            <form method="post" style="margin-top:10px;">
+              <button class="boton-pequeño boton-cancelar" type="submit" onclick="return confirm('¿Estás seguro de cancelar?')">Cancelar Viaje</button>
+            </form>
+          {% endif %}
+        </div>
+      {% endfor %}
+    {% else %}
+      <div class="sin-viajes">
+        <div class="sin-viajes-icono">📭</div>
+        <p><strong>No tienes viajes solicitados</strong></p>
+        <p>Solicita un viaje para empezar</p>
+        <a href="/solicitar_viaje" class="boton-link" style="margin-top:18px;">Solicitar Viaje</a>
+      </div>
+    {% endif %}
+    
+    <a href="/panel_usuario" class="boton-link" style="background:#999;margin-top:22px;">Volver a Mi Panel</a>
+  </div>
+
+  <script>
+    function abrirMenu() {
+      document.getElementById('menulat').classList.add('open');
+      document.getElementById('fondo').classList.add('show');
+    }
+    function cerrarMenu() {
+      document.getElementById('menulat').classList.remove('open');
+      document.getElementById('fondo').classList.remove('show');
+    }
+  </script>
+</body>
+</html>

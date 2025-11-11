@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Login Conductor - Taxi MarYo</title>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:600,700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --color-logo: #FFD600;
+  --color-texto: #232d3b;
+}
+body {background: #e6e7ee; font-family:'Open Sans',Arial,sans-serif; color:var(--color-texto); margin:0;}
+.header {height:56px;background:var(--color-logo);display:flex;align-items:center;justify-content:space-between;padding:0 18px;position:relative;z-index:120;box-shadow:0 2px 12px #2227;}
+.logo {color:var(--color-texto);font-size:1.25rem;font-weight:700;}
+.menu-btn {background:none;border:none;cursor:pointer;z-index:130;}
+.menu-ham {width:34px;height:34px;display:block;}
+.menu-ham rect{fill:var(--color-logo);stroke:var(--color-texto);stroke-width:2;}
+.menu {position:fixed;top:0;left:-94vw;width:92vw;min-width:160px;max-width:420px;height:100vh;background:#fff;box-shadow:2px 0 22px #2224;transition:left .3s;z-index:150;overflow-y:auto;display:block;}
+.menu.open {left:0;}
+.menu ul {list-style:none;padding:0;margin:0;width:100%;}
+.menu li {width:100%;padding:0;margin:0;}
+.menu a,.menu .active,.menu a:hover {display:block;color:var(--color-texto) !important;font-size:1.15rem !important;font-weight:700 !important;padding:18px 22px !important;background:var(--color-logo) !important;border:none !important;box-shadow:none !important;text-align:left;width:100%!important;}
+.menu .active,.menu a:hover {background:var(--color-texto)!important;color:var(--color-logo)!important;}
+.overlay {display:none;position:fixed;z-index:100;top:0;left:0;width:100vw;height:100vh;background:rgba(40,48,60,0.08);}
+.overlay.show {display:block;}
+.main {padding:30px 12px;margin:50px auto 16px auto;background:#fff;border-radius:28px;box-shadow:0 4px 32px #bbb;max-width:445px;text-align:center;}
+.titulo {font-size:1.45rem;font-weight:700;margin-bottom:20px;}
+form {text-align:left;max-width:340px;margin:0 auto;}
+.label {font-weight:600;color:#26416c;display:block;margin-top:14px;margin-bottom:3px;}
+input {width:100%; padding:11px; font-size:1.09rem; border-radius:8px;border:1.5px solid #dde; margin-bottom:13px;}
+input:focus {outline:none; border:1.5px solid #FFD600;}
+.boton-link {
+  display:inline-block;margin:20px auto 8px auto;padding:13px 44px;background:var(--color-logo);font-size:1.09rem;color:var(--color-texto);font-weight:700;border-radius:16px;text-decoration:none;box-shadow:0 2px 12px #ccc;border:none;transition:.2s;cursor:pointer;
+}
+.boton-link:hover {background:var(--color-texto);color:var(--color-logo);}
+.alerta {background:#fce8e6;color:#bc2222;padding:8px 17px;border-radius:8px;font-weight:700;margin-bottom:18px;font-size:1.11rem;}
+@media (max-width:650px){
+  .main{padding:20px 2vw;}
+  .titulo{font-size:1.13rem;}
+  .logo {font-size:1.03rem;}
+}
+</style>
+</head>
+<body>
+<div class="header">
+  <button class="menu-btn" onclick="abrirMenu()" aria-label="Menú">
+    <svg width="34" height="34" viewBox="0 0 48 48" class="menu-ham">
+      <rect y="7" width="34" height="6" rx="3"/>
+      <rect y="21" width="34" height="6" rx="3"/>
+      <rect y="35" width="34" height="6" rx="3"/>
+    </svg>
+  </button>
+  <span class="logo">Taxi MarYo</span>
+</div>
+<div class="menu" id="menulat">
+  <ul>
+    <li><a href="/">Inicio</a></li>
+    <li><a href="/solicitar_viaje">Solicitar viaje</a></li>
+    <li><a href="/seguimiento">Ver seguimiento</a></li>
+    <li><a href="/viajes">Mis viajes</a></li>
+    <li><a href="/login">Login</a></li>
+    <li><a href="/register">Registrar</a></li>
+    <li><a href="/admin_login">Login Admin</a></li>
+    <li><a href="/salir">Salir</a></li>
+  </ul>
+</div>
+
+</div>
+<div class="overlay" id="fondo" onclick="cerrarMenu()"></div>
+<div class="main">
+  <div class="titulo">Iniciar sesión como conductor</div>
+  <!-- <div class="alerta">Usuario o contraseña incorrectos.</div> -->
+  <form method="post" action="/conductor_login">
+    <label class="label" for="usuario">Usuario o Email</label>
+    <input type="text" id="usuario" name="usuario" placeholder="Usuario o email" required>
+    <label class="label" for="password">Contraseña</label>
+    <input type="password" id="password" name="password" placeholder="Contraseña" required>
+    <button class="boton-link" type="submit">Login Conductor</button>
+  </form>
+  <a class="boton-link" href="/">Volver al inicio</a>
+</div>
+<script>
+function abrirMenu() {
+  document.getElementById('menulat').classList.add('open');
+  document.getElementById('fondo').classList.add('show');
+}
+function cerrarMenu() {
+  document.getElementById('menulat').classList.remove('open');
+  document.getElementById('fondo').classList.remove('show');
+}
+</script>
+</body>
+</html>
